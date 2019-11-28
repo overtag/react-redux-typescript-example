@@ -33,6 +33,9 @@ module.exports = {
   // adding .ts and .tsx to resolve.extensions will help babel look for .ts and .tsx files to transpile
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
+    alias: {
+      ui: path.resolve(__dirname, 'src/components/ui/*'),
+    },
   },
 
   mode: 'development',
