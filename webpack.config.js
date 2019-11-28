@@ -15,7 +15,6 @@ module.exports = {
       cacheGroups: {
         vendor: {
           name: 'vendors',
-
           test: /node_modules/,
           chunks: 'all',
           enforce: true,
@@ -62,7 +61,7 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: 8192,
-              name: './fonts/[name].[hash].[ext]',
+              name: './fonts/[name].[contenthash].[ext]',
             },
           },
         ],
@@ -73,7 +72,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: './images/[name].[hash].[ext]',
+              name: './images/[name].[contenthash].[ext]',
             },
           },
         ],
@@ -105,8 +104,8 @@ module.exports = {
       template: './public/index_template.html',
     }),
     new MiniCssExtractPlugin({
-      filename: './style/[name].[hash].css',
-      chunkFilename: './style/[name].[id].[hash].css',
+      filename: './[name].[contenthash].css',
+      chunkFilename: './[name].[id].[contenthash].css',
       ignoreOrder: false,
     }),
   ],
