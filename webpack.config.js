@@ -11,7 +11,19 @@ module.exports = {
 
   optimization: {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          name: 'vendors',
+
+          test: /node_modules/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
   },
+
   // and output it into /dist as bundle.js
   output: {
     path: path.join(__dirname, '/web'),
@@ -83,15 +95,15 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ['!other/*'], // Removes files once prior to Webpack compilation  //   Not included in rebuilds (watch mode)
-      cleanAfterEveryBuildPatterns: ['!other/*'], // cleanOnceBeforeBuildPatterns: [], // disables cleanOnceBeforeBuildPatterns
+      cleanOnceBeforeBuildPatterns: ['**/*', '!other', '!other/**/*'], // Removes files once prior to Webpack compilation  //   Not included in rebuilds (watch mode)
+      // cleanAfterEveryBuildPatterns: ['!other/*'], // cleanOnceBeforeBuildPatterns: [], // disables cleanOnceBeforeBuildPatterns
     }),
     new HtmlWebpackPlugin({
       template: './public/index_template.html',
     }),
     new MiniCssExtractPlugin({
       filename: './style/[name].[hash].css',
-      chunkFilename: '[id].css',
+      chunkFilename: './style/[name].[id].[contenthash].css',
       ignoreOrder: false,
     }),
   ],
