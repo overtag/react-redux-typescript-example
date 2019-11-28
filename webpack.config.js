@@ -47,6 +47,7 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: 8192,
+              name: './fonst/[name].[ext]',
             },
           },
         ],
@@ -56,42 +57,42 @@ module.exports = {
         use: [
           {
             loader: 'file-loader',
+            options: {
+              name: './images/[name].[ext]',
+            },
           },
         ],
       },
 
-      // css-loader to bundle all the css files into one file and style-loader to add all the styles  inside the style tag of the document
       {
         test: /\.css$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              // you can specify a publicPath here
-              // by default it uses publicPath in webpackOptions.output
-              publicPath: '/web',
-              hmr: process.env.NODE_ENV === 'development',
+              hmr: process.env.NODE_ENV === 'development', // hmr -> hot module replacement
+              ignoreOrder: false, // Enable to remove warnings about conflicting order
             },
           },
-          'css-loader',
+          {
+            loader: 'css-loader',
+          },
         ],
       },
     ],
   },
   plugins: [
     new CleanWebpackPlugin({
-      cleanStaleWebpackAssets: true,
-      dirty: true,
+      cleanOnceBeforeBuildPatterns: ['!other/*'], // Removes files once prior to Webpack compilation  //   Not included in rebuilds (watch mode)
+      cleanAfterEveryBuildPatterns: ['!other/*'], // cleanOnceBeforeBuildPatterns: [], // disables cleanOnceBeforeBuildPatterns
     }),
     new HtmlWebpackPlugin({
       template: './public/index_template.html',
     }),
     new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // all options are optional
-      filename: '[name].[hash].css',
+      filename: './style/[name].[hash].css',
       chunkFilename: '[id].css',
-      ignoreOrder: false, // Enable to remove warnings about conflicting order
+      ignoreOrder: false,
     }),
   ],
 };
