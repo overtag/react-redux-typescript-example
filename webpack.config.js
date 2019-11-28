@@ -27,7 +27,7 @@ module.exports = {
   // and output it into /dist as bundle.js
   output: {
     path: path.join(__dirname, '/web'),
-    filename: '[name].[contenthash].js',
+    filename: '[name].[hash].js',
   },
 
   // adding .ts and .tsx to resolve.extensions will help babel look for .ts and .tsx files to transpile
@@ -62,7 +62,7 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: 8192,
-              name: './fonts/[name].[contenthash].[ext]',
+              name: './fonts/[name].[hash].[ext]',
             },
           },
         ],
@@ -73,7 +73,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: './images/[name].[contenthash].[ext]',
+              name: './images/[name].[hash].[ext]',
             },
           },
         ],
@@ -105,8 +105,8 @@ module.exports = {
       template: './public/index_template.html',
     }),
     new MiniCssExtractPlugin({
-      filename: './style/[name].[contenthash].css',
-      chunkFilename: './style/[name].[id].[contenthash].css',
+      filename: './style/[name].[hash].css',
+      chunkFilename: './style/[name].[id].[hash].css',
       ignoreOrder: false,
     }),
   ],
