@@ -26,6 +26,7 @@ module.exports = {
   // and output it into /dist as bundle.js
   output: {
     path: path.join(__dirname, '/web'),
+    publicPath: '/',
     filename: '[name].[hash].js',
   },
 
