@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { ActionCreator } from 'typescript-fsa';
 
+import { AppState } from '../store';
 import {
   initAction,
   changeEmailAction,
@@ -14,14 +16,15 @@ import {
   ChangeUrlAction,
   ChangeUserAction,
 } from '../store/common/types';
+
+import { getEmail, getUser, getUrl } from '../store/common/selectors';
+
 import { H2, Text1 } from './ui/text-default-styled';
 import InputBorder from './ui/InputBorder';
 import { ButtonLink } from './ui/ButtonLink';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { InfoBlock } from './InfoBlock';
-import { ActionCreator } from 'typescript-fsa';
-import { AppState } from '../store';
 import { Title } from './Title';
 
 const TextConditions = styled(Text1)`
@@ -65,18 +68,22 @@ const ButtonLinkStyled = styled(ButtonLink)`
   margin: 15px auto;
 `;
 
-interface Props {
+interface Props extends Partial<MapStateToProps>, Partial<MapDispatchToProps> {}
+
+interface MapStateToProps {
   user?: string;
   email?: string;
   url?: string;
+}
+
+interface MapDispatchToProps {
   initAction?: ActionCreator<InitAction>;
   changeEmailAction?: ActionCreator<ChangeEmailAction>;
   changeUrlAction?: ActionCreator<ChangeUrlAction>;
   changeUserAction?: ActionCreator<ChangeUserAction>;
 }
 
-@(connect(mapStateToProps, mapDispatchToProps) as any)
-export class ScreenRegistration extends React.Component<Props> {
+class ScreenRegistration extends React.Component<Props> {
   changeUrl = (e: any): void => {
     this.props.changeUrlAction({ url: e.target.value });
   };
@@ -101,16 +108,19 @@ export class ScreenRegistration extends React.Component<Props> {
             <Title />
 
             <InputBorderStyled
+              key={'Input url'}
               placeholder='Введите ссылку на ваш аккаунт'
               onChange={this.changeUrl}
               defaultValue={url}
             />
             <InputBorderStyled
+              key={'Input user'}
               defaultValue={user}
               placeholder='Имя и фамилия'
               onChange={this.changeUser}
             />
             <InputBorderStyled
+              key={'Input email'}
               defaultValue={email}
               placeholder='Эл. Адрес'
               onChange={this.changeEmail}
@@ -125,14 +135,17 @@ export class ScreenRegistration extends React.Component<Props> {
   }
 }
 
-function mapStateToProps(state: AppState) {
-  return {
-    user: state.common.user,
-    url: state.common.url,
-    email: state.common.email,
-  };
-}
+const mapStateToProps = (state: AppState, ownProps): MapStateToProps => ({
+  user: getUser(state),
+  url: getUrl(state),
+  email: getEmail(state),
+});
 
-function mapDispatchToProps() {
-  return { initAction, changeEmailAction, changeUrlAction, changeUserAction };
-}
+const mapDispatchToProps = {
+  initAction,
+  changeEmailAction,
+  changeUrlAction,
+  changeUserAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScreenRegistration);

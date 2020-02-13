@@ -2,11 +2,13 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import { AppState } from '../store';
+import { getEmail, getUser, getUrl } from '../store/common/selectors';
+
 import { P, Text2, Text3 } from './ui/text-default-styled';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { InfoBlock } from './InfoBlock';
-import { AppState } from '../store';
 import { ButtonLink } from './ui/ButtonLink';
 import { Title } from './Title';
 
@@ -56,8 +58,15 @@ interface Props {
   url?: string;
 }
 
-@(connect(mapStateToProps, null) as any)
-export class ScreenConfirmation extends React.Component<Props> {
+interface Props extends Partial<MapStateToProps> {}
+
+interface MapStateToProps {
+  user?: string;
+  email?: string;
+  url?: string;
+}
+
+class ScreenConfirmation extends React.Component<Props> {
   render() {
     const { url, user, email } = this.props;
 
@@ -86,10 +95,10 @@ export class ScreenConfirmation extends React.Component<Props> {
   }
 }
 
-function mapStateToProps(state: AppState) {
-  return {
-    user: state.common.user,
-    url: state.common.url,
-    email: state.common.email,
-  };
-}
+const mapStateToProps = (state: AppState, ownProps): MapStateToProps => ({
+  user: getUser(state),
+  url: getUrl(state),
+  email: getEmail(state),
+});
+
+export default connect(mapStateToProps, null)(ScreenConfirmation);

@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+
+import { AppState } from '../store';
+import { getEmail, getUser, getUrl } from '../store/common/selectors';
 import { P, Text2, Text3 } from './ui/text-default-styled';
 import { Header } from './Header';
 import { Footer } from './Footer';
-import { AppState } from '../store';
 import { InfoBlock } from './InfoBlock';
 import { Title } from './Title';
 
@@ -45,14 +47,15 @@ const Value = styled(Text2)`
   margin: 2px 30px 0 30px;
 `;
 
-interface Props {
+interface Props extends Partial<MapStateToProps> {}
+
+interface MapStateToProps {
   user?: string;
   email?: string;
   url?: string;
 }
 
-@(connect(mapStateToProps, null) as any)
-export class ScreenCompleted extends React.Component<Props> {
+class ScreenCompleted extends React.Component<Props> {
   render() {
     const { user, url, email } = this.props;
 
@@ -79,10 +82,10 @@ export class ScreenCompleted extends React.Component<Props> {
   }
 }
 
-function mapStateToProps(state: AppState) {
-  return {
-    user: state.common.user,
-    url: state.common.url,
-    email: state.common.email,
-  };
-}
+const mapStateToProps = (state: AppState, ownProps): MapStateToProps => ({
+  user: getUser(state),
+  url: getUrl(state),
+  email: getEmail(state),
+});
+
+export default connect(mapStateToProps, null)(ScreenCompleted);

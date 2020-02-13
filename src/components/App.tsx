@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { ScreenRegistration } from './ScreenRegistration';
-import { ScreenConfirmation } from './ScreenConfirmation';
-import { ScreenCompleted } from './ScreenCompleted';
+import ScreenRegistration from './ScreenRegistration';
+import ScreenConfirmation from './ScreenConfirmation';
+import ScreenCompleted from './ScreenCompleted';
 
 interface Props {}
 

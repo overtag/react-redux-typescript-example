@@ -19,6 +19,7 @@ function initReducer(state: CommonState, payload: InitAction): CommonState {
 }
 
 function changeEmailReducer(state: CommonState, payload: ChangeEmailAction): CommonState {
+  console.log('changeEmailReducer');
   return { ...state, email: payload.email };
 }
 

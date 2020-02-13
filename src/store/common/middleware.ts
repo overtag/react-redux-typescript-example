@@ -17,6 +17,7 @@ export const common: Middleware<CommonState> = middleware()
     next(action);
   })
   .case(changeEmailAction, (api: any, next: Dispatch, action: Action<ChangeEmailAction>) => {
+    console.log('changeEmail Middleware');
     next(action);
   })
   .case(changeUrlAction, (api: any, next: Dispatch, action: Action<ChangeUrlAction>) => {
