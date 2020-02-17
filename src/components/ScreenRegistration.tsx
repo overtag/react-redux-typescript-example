@@ -84,15 +84,15 @@ interface MapDispatchToProps {
 }
 
 class ScreenRegistration extends React.Component<Props> {
-  changeUrl = (e: any): void => {
+  changeUrl = (e: React.ChangeEvent<HTMLInputElement>): void => {
     this.props.changeUrlAction({ url: e.target.value });
   };
 
-  changeEmail = (e: any): void => {
+  changeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
     this.props.changeEmailAction({ email: e.target.value });
   };
 
-  changeUser = (e: any): void => {
+  changeUser = (e: React.ChangeEvent<HTMLInputElement>): void => {
     this.props.changeUserAction({ user: e.target.value });
   };
 

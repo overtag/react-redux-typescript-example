@@ -65,35 +65,27 @@ interface MapStateToProps {
   email?: string;
   url?: string;
 }
+const ScreenConfirmation = ({ user, url, email }: Props) => (
+  <Block>
+    <Header />
+    <Main>
+      <InfoBlock />
+      <ColumnTwo>
+        <Title />
+        <P>Проверьте введеные вами данные и перейдите к следующему шагу</P>
+        <Description>Ссылка на ваш аккаунт</Description>
+        <Value>{url}</Value>
+        <Description>Имя и фамилия</Description>
+        <Value>{user}</Value>
+        <Description>Эл. Адрес</Description>
+        <Value>{email}</Value>
 
-class ScreenConfirmation extends React.Component<Props> {
-  render() {
-    const { url, user, email } = this.props;
-
-    return (
-      <Block>
-        <Header />
-
-        <Main>
-          <InfoBlock />
-          <ColumnTwo>
-            <Title />
-            <P>Проверьте введеные вами данные и перейдите к следующему шагу</P>
-            <Description>Ссылка на ваш аккаунт</Description>
-            <Value>{url}</Value>
-            <Description>Имя и фамилия</Description>
-            <Value>{user}</Value>
-            <Description>Эл. Адрес</Description>
-            <Value>{email}</Value>
-
-            <ButtonLinkStyled to={'/congratulation'}>Далее</ButtonLinkStyled>
-          </ColumnTwo>
-        </Main>
-        <Footer />
-      </Block>
-    );
-  }
-}
+        <ButtonLinkStyled to={'/congratulation'}>Далее</ButtonLinkStyled>
+      </ColumnTwo>
+    </Main>
+    <Footer />
+  </Block>
+);
 
 const mapStateToProps = (state: AppState, ownProps): MapStateToProps => ({
   user: getUser(state),

@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "bundle": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "startWebpack": "webpack --watch",
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production",
-    "check-types": "tsc"
+    "check-types": "tsc",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -57,6 +57,7 @@
     "css-loader": "^3.2.0",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^25.1.0",
     "mini-css-extract-plugin": "^0.8.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
