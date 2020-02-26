@@ -11,15 +11,8 @@ const Block = styled.footer`
 const Link = styled(A)`
   margin-left: 15px;
 `;
+const a = [1, 2, 3, 4, 5];
 
 export const Footer = () => {
-  return (
-    <Block>
-      <Text3>© DAFTPUNK </Text3>
-      <Link href='mailto:help@instagramban.com'>help@daftpunk.com</Link>
-      <Link style={{ color: '#999999' }} href={'#'} target='_blank'>
-        Контакты
-      </Link>
-    </Block>
-  );
+  return <Block></Block>;
 };

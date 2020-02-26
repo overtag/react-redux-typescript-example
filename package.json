@@ -9,7 +9,20 @@
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production",
     "check-types": "tsc",
-    "test": "jest"
+    "test": "./node_modules/.bin/jest"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/test-preprocessor.js"
+    },
+    "testMatch": [
+      "**/__tests__/*.(ts|tsx|js)"
+    ]
   },
   "repository": {
     "type": "git",
@@ -52,6 +65,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
+    "@types/jest": "^25.1.2",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",

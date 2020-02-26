@@ -68,6 +68,9 @@ const ButtonLinkStyled = styled(ButtonLink)`
   margin: 15px auto;
 `;
 
+function getId<T>(id: T) {
+  console.log(id);
+}
 interface Props extends Partial<MapStateToProps>, Partial<MapDispatchToProps> {}
 
 interface MapStateToProps {
