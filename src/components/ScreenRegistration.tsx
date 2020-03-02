@@ -86,56 +86,45 @@ interface MapDispatchToProps {
   changeUserAction?: ActionCreator<ChangeUserAction>;
 }
 
-class ScreenRegistration extends React.Component<Props> {
-  changeUrl = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    this.props.changeUrlAction({ url: e.target.value });
-  };
-
-  changeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    this.props.changeEmailAction({ email: e.target.value });
-  };
-
-  changeUser = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    this.props.changeUserAction({ user: e.target.value });
-  };
-
-  render() {
-    const { url, user, email } = this.props;
-
-    return (
-      <Block>
-        <Header />
-        <Main>
-          <InfoBlock />
-          <ColumnTwo>
-            <Title />
-
-            <InputBorderStyled
-              key={'Input url'}
-              placeholder='Введите ссылку на ваш аккаунт'
-              onChange={this.changeUrl}
-              defaultValue={url}
-            />
-            <InputBorderStyled
-              key={'Input user'}
-              defaultValue={user}
-              placeholder='Имя и фамилия'
-              onChange={this.changeUser}
-            />
-            <InputBorderStyled
-              key={'Input email'}
-              defaultValue={email}
-              placeholder='Эл. Адрес'
-              onChange={this.changeEmail}
-            />
-            <ButtonLinkStyled to={'/confirmation'}>Далее</ButtonLinkStyled>
-            <TextConditions>Нажимая кнопку далее, вы принимаете наши условия.</TextConditions>
-          </ColumnTwo>
-        </Main>
-        <Footer />
-      </Block>
-    );
-  }
+function ScreenRegistration({ url, user, email }: Props) {
+  return (
+    <Block>
+      <Header />
+      <Main>
+        <InfoBlock />
+        <ColumnTwo>
+          <Title />
+          <InputBorderStyled
+            key={'Input url'}
+            placeholder='Введите ссылку на ваш аккаунт'
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              this.props.changeUrlAction({ url: e.target.value });
+            }}
+            defaultValue={url}
+          />
+          <InputBorderStyled
+            key={'Input user'}
+            defaultValue={user}
+            placeholder='Имя и фамилия'
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              this.props.changeUserAction({ user: e.target.value });
+            }}
+          />
+          <InputBorderStyled
+            key={'Input email'}
+            defaultValue={email}
+            placeholder='Эл. Адрес'
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              this.props.changeEmailAction({ email: e.target.value });
+            }}
+          />
+          <ButtonLinkStyled to={'/confirmation'}>Далее</ButtonLinkStyled>
+          <TextConditions>Нажимая кнопку далее, вы принимаете наши условия.</TextConditions>
+        </ColumnTwo>
+      </Main>
+      <Footer />
+    </Block>
+  );
 }
 
 const mapStateToProps = (state: AppState, ownProps): MapStateToProps => ({
