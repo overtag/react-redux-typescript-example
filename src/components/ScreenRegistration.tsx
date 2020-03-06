@@ -84,11 +84,13 @@ interface MapDispatchToProps {
 }
 
 const ScreenRegistration: React.FC<Props> = () => {
-  const { url, user, email } = useSelector<AppState, StateProps>((state: AppState) => ({
-    url: getUser,
-    user: getUrl,
-    email: getEmail,
-  }));
+  const { url, user, email } = useSelector<AppState, StateProps>(
+    (state: AppState): StateProps => ({
+      url: getUser(state),
+      user: getUrl(state),
+      email: getEmail(state),
+    }),
+  );
 
   const dispatch = useDispatch();
 

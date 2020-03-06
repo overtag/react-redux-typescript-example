@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 import { AppState } from '../store';
 import { getEmail, getUser, getUrl } from '../store/common/selectors';
@@ -58,39 +59,49 @@ interface Props {
   url?: string;
 }
 
-interface Props extends Partial<MapStateToProps> {}
+interface Props {}
+
+interface StateProps {
+  user?: string;
+  email?: string;
+  url?: string;
+}
 
 interface MapStateToProps {
   user?: string;
   email?: string;
   url?: string;
 }
-const ScreenConfirmation = ({ user, url, email }: Props) => (
-  <Block>
-    <Header />
-    <Main>
-      <InfoBlock />
-      <ColumnTwo>
-        <Title />
-        <P>Проверьте введеные вами данные и перейдите к следующему шагу</P>
-        <Description>Ссылка на ваш аккаунт</Description>
-        <Value>{url}</Value>
-        <Description>Имя и фамилия</Description>
-        <Value>{user}</Value>
-        <Description>Эл. Адрес</Description>
-        <Value>{email}</Value>
+const ScreenConfirmation: React.FC<Props> = () => {
+  const { url, user, email } = useSelector<AppState, StateProps>(
+    (state: AppState): StateProps => ({
+      url: getUser(state),
+      user: getUrl(state),
+      email: getEmail(state),
+    }),
+  );
 
-        <ButtonLinkStyled to={'/congratulation'}>Далее</ButtonLinkStyled>
-      </ColumnTwo>
-    </Main>
-    <Footer />
-  </Block>
-);
+  return (
+    <Block>
+      <Header />
+      <Main>
+        <InfoBlock />
+        <ColumnTwo>
+          <Title />
+          <P>Проверьте введеные вами данные и перейдите к следующему шагу</P>
+          <Description>Ссылка на ваш аккаунт</Description>
+          <Value>{url}</Value>
+          <Description>Имя и фамилия</Description>
+          <Value>{user}</Value>
+          <Description>Эл. Адрес</Description>
+          <Value>{email}</Value>
 
-const mapStateToProps = (state: AppState, ownProps): MapStateToProps => ({
-  user: getUser(state),
-  url: getUrl(state),
-  email: getEmail(state),
-});
+          <ButtonLinkStyled to={'/congratulation'}>Далее</ButtonLinkStyled>
+        </ColumnTwo>
+      </Main>
+      <Footer />
+    </Block>
+  );
+};
 
-export default connect(mapStateToProps, null)(ScreenConfirmation);
+export default ScreenConfirmation;

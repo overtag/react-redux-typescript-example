@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 import { AppState } from '../store';
 import { getEmail, getUser, getUrl } from '../store/common/selectors';
@@ -47,7 +48,13 @@ const Value = styled(Text2)`
   margin: 2px 30px 0 30px;
 `;
 
-interface Props extends Partial<MapStateToProps> {}
+interface Props {}
+
+interface StateProps {
+  user?: string;
+  email?: string;
+  url?: string;
+}
 
 interface MapStateToProps {
   user?: string;
@@ -55,26 +62,35 @@ interface MapStateToProps {
   url?: string;
 }
 
-const ScreenCompleted = ({ user, url, email }: Props) => (
-  <Block>
-    <Header />
-    <Main>
-      <InfoBlock />
-      <ColumnTwo>
-        <Title />
-        <P>Регистрация произведена успешно!</P>
-        <P>Введеные вами данные:</P>
-        <Description>Ссылка на ваш аккаунт</Description>
-        <Value>{url}</Value>
-        <Description>Имя и фамилия</Description>
-        <Value>{user}</Value>
-        <Description>Эл. Адрес</Description>
-        <Value>{email}</Value>
-      </ColumnTwo>
-    </Main>
-    <Footer />
-  </Block>
-);
+const ScreenCompleted: React.FC<Props> = () => {
+  const { url, user, email } = useSelector<AppState, StateProps>(
+    (state: AppState): StateProps => ({
+      url: getUser(state),
+      user: getUrl(state),
+      email: getEmail(state),
+    }),
+  );
+  return (
+    <Block>
+      <Header />
+      <Main>
+        <InfoBlock />
+        <ColumnTwo>
+          <Title />
+          <P>Регистрация произведена успешно!</P>
+          <P>Введеные вами данные:</P>
+          <Description>Ссылка на ваш аккаунт</Description>
+          <Value>{url}</Value>
+          <Description>Имя и фамилия</Description>
+          <Value>{user}</Value>
+          <Description>Эл. Адрес</Description>
+          <Value>{email}</Value>
+        </ColumnTwo>
+      </Main>
+      <Footer />
+    </Block>
+  );
+};
 
 const mapStateToProps = (state: AppState, ownProps): MapStateToProps => ({
   user: getUser(state),
@@ -82,4 +98,4 @@ const mapStateToProps = (state: AppState, ownProps): MapStateToProps => ({
   email: getEmail(state),
 });
 
-export default connect(mapStateToProps, null)(ScreenCompleted);
+export default ScreenCompleted;
