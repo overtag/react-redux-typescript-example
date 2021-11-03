@@ -57,7 +57,7 @@
     "typescript-fsa": "^3.0.0-beta-2",
     "typescript-fsa-reducers": "^1.2.1",
     "typescript-fsa-redux-middleware": "^4.1.1",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
